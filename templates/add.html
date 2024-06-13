@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block body %}
+
+<form
+  class="flex flex-col gap-3 max-w-[400px]"
+  action="/addexpense"
+  method="POST"
+>
+  <h2 class="text-2xl font-bold">Add expense</h2>
+  <label class="flex flex-col gap-1" for="date">
+    Date
+    <input
+      class="border border-gray-600 rounded h-8"
+      type="date"
+      name="date"
+      id="date"
+    />
+  </label>
+  <label class="flex flex-col gap-1" for="expensename"
+    >Expense name
+
+    <input
+      class="border border-gray-600 rounded h-8"
+      type="text"
+      name="expensename"
+      id="expensename"
+    />
+  </label>
+  <label class="flex flex-col gap-1" for="amount"
+    >Expense Amount
+    <input
+      class="border border-gray-600 rounded h-8"
+      type="text"
+      name="amount"
+      id="amount"
+    />
+  </label>
+  <label for="category" class="flex flex-col gap-1">
+    Category
+    <select
+      class="border border-gray-600 rounded h-8 cursor-pointer"
+      name="category"
+      id="category"
+    >
+      <option value="food">Food</option>
+      <option value="entertainment">Entertainment</option>
+      <option value="business">Business</option>
+      <option value="other">Other</option>
+    </select>
+  </label>
+  <button class="px-3 py-1 bg-green-400 text-white rounded mt-4" type="submit">
+    Add
+  </button>
+</form>
+{% endblock %}

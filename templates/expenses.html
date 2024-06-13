@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% block body %}
+<div class="max-w-[900px] mx-auto">
+  <ul class="flex flex-col gap-4">
+    <h3 class="text-3xl font-bold">Expenses</h3>
+    {% for expense in expenses %}
+    <li
+      class="py-4 px-4 bg-white drop-shadow grid gap-3 grid-cols-3 md:grid-cols-6 justify-between rounded-md items-center"
+    >
+      <p>{{expense.expensename}}</p>
+      <p>${{expense.amount}}</p>
+      <p>{{expense.date}}</p>
+      <span class="bg-blue-500 text-white px-1 w-fit h-fit rounded-md"
+        >{{expense.category}}</span
+      >
+      <a
+        href="/update/{{expense.id}}"
+        class="py-2 px-3 text-white bg-green-400 w-fit rounded"
+      >
+        Edit
+      </a>
+      <a
+        href="/delete/{{expense.id}}"
+        class="py-2 px-3 text-white bg-red-500 w-fit rounded"
+      >
+        Delete
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <section class="w-full my-14 md:grid md:grid-cols-2 gap-4">
+    <div class="max-w-[450px]">
+      <h3 class="text-2xl font-bold">Expense breakdown</h3>
+      <ul class="bg-white drop-shadow flex flex-col mt-3 rounded-md">
+        <li class="py-6 px-2 grid grid-cols-2">
+          <p>Food</p>
+          <span id="tfood">{{totals.food}}</span>
+        </li>
+        <li class="py-6 px-2 grid grid-cols-2 border-t border-gray-60">
+          <p>Entertainment</p>
+          <span id="tentertainment">{{totals.entertainment}}</span>
+        </li>
+        <li class="py-6 px-2 grid grid-cols-2 border-t border-gray-60">
+          <p>Business</p>
+          <span id="tbusiness">{{totals.business}}</span>
+        </li>
+        <li class="py-6 px-2 grid grid-cols-2 border-t border-gray-60">
+          <p>Other</p>
+          <span id="tother">{{totals.other}}</span>
+        </li>
+        <li class="py-6 px-2 grid grid-cols-2 border-t border-gray-60">
+          <p>Total</p>
+          <span id="total">{{totals.total}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="">
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+      <script>
+        let food = document.getElementById("tfood").innerHTML;
+        let entertainment = document.getElementById("tentertainment").innerHTML;
+        let business = document.getElementById("tbusiness").innerHTML;
+        let other = document.getElementById("tother").innerHTML;
+        const ctx = document.getElementById("myChart");
+
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Food", "Entertainment", "Business", "Other"],
+            datasets: [
+              {
+                label: "# of Votes",
+                data: [food, entertainment, business, other],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+    </div>
+  </section>
+</div>
+{% endblock %}
